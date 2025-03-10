@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX 예제</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <button id="fetchData">데이터 가져오기</button>
+    <div id="result"></div>
+
+    <script>
+        $(document).ready(function() {
+            $("#fetchData").click(function() {
+                $.ajax({
+                    url: "http://localhost:5000/hello",
+                    method: "GET",
+                    success: function(response) {
+                        console.log(response)
+                        $("#result").text(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("오류 발생:", error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

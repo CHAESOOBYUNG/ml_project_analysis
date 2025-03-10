@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인구 예측</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='korea/style.css') }}">
+</head>
+<body>
+  <!-- 헤더 -->
+  <header>
+    <nav>
+      <h2 class="logo" onclick="goToMain()">머신러닝 한국 인구 예측</h2>
+      <h2 class="logo" onclick="Question()">게시판</h2>
+    </nav>
+
+    <div class="header-container">
+      <!-- 지역 소멸 예측 -->
+      <div class="header-section left">
+        <h2>지역소멸 예측</h2>
+        <div id="controls">
+          <label for="year-select">연도:</label>
+          <select id="year-select" class="custom-selector">
+            <option value="2025">2025년</option>
+            <option value="2035">2035년</option>
+            <option value="2045">2045년</option>
+            <option value="2055">2055년</option>
+            <option value="2065">2065년</option>
+            <option value="2075">2075년</option>
+          </select>
+        </div>
+        <div id="map-container">
+          <img id="korea-map" src="{{ url_for('static', filename='korea/images/kr-04_2.jpg') }}" alt="한국 지도">
+        </div>
+        <div id="description-box">
+          <p id="region-name"></p>
+          <p id="region-value"></p>
+          <p id="region-info"></p>
+        </div>
+      </div>
+      
+      <!-- 인구 피라미드 -->
+      <div class="header-section right">
+        <h2>인구 피라미드</h2>
+        <div class="selector-container">
+          <label for="year-select">연도: </label>
+          <select id="chart-type">
+            <option value="chart1">2025년</option>
+            <option value="chart2">2035년</option>
+            <option value="chart3">2045년</option>
+            <option value="chart4">2055년</option>
+            <option value="chart5">2065년</option>
+            <option value="chart6">2075년</option>
+          </select>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart1"></canvas>
+          <canvas id="chart2"></canvas>
+          <canvas id="chart3"></canvas>
+          <canvas id="chart4"></canvas>
+          <canvas id="chart5"></canvas>
+          <canvas id="chart6"></canvas>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <script src="{{ url_for('static', filename='korea/script.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  
+
+  <!-- 선택 가이드 -->
+  <section id="choice">
+    <h2>통계 자료 가이드</h2>
+    <div class="choice-content">
+      <div class="card">
+        <h3>인구 피라미드</h3> 
+        <p>미래의 대한민국 인구에 대한 데이터를 피라미드 모양으로 구현</p>
+        <div class="bean-img">
+          <img src="{{ url_for('static', filename='images/graph.png') }}" alt="">
+        </div>
+      </div>
+      <div class="card">
+        <h3>지역소멸 예측</h3> 
+        <p>10년 단위로 인구수 및 지역소멸위험도 예측</p>
+        <p>지역 소멸도가 0에 가까울 수록 소멸 위험도 높음</p>
+        <div class="bean-img">
+          <img src="{{ url_for('static', filename='images/graph.png') }}" alt="">
+        </div>
+      </div>
+    </div>
+  </section>  
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>자주하는 질문과 답변</h2>
+    <ul class="accordion">
+      <li>
+        <input type="radio" name="accordion" id="first">
+        <label for="first">기획의도가 무엇인가요?</label>
+        <div class="content">          
+          <p>지속적으로 감소하는 출생아 수와 노인 인구 증가에 따른 문제를 알리기 위해서 이 프로젝트를 기획하게 되었습니다.</p>
+        </div>
+      </li>
+      <li>
+        <input type="radio" name="accordion" id="second">
+        <label for="second">개발목표가 무엇인가요?</label>
+        <div class="content">
+          <p>1. 릿지회귀를 사용하여 사망인구, 출생인구를 예측하는 인공지능 모델 구현</p>
+          <p>2. 연령별 사망률, 출생률 데이터를 이용하여 미래 대한민국 예상 인구를 피라미드 모양으로 구현</p>
+          <p>3. 사망률, 출산율 데이터에 이주 데이터를 추가하여 지역 인구수, 소멸 위험 예측</p>
+        </div>
+      </li>
+      <li>
+        <input type="radio" name="accordion" id="third">
+        <label for="third">업무분장은 어떻게 되나요?</label>
+        <div class="content">
+          <img src="{{ url_for('static', filename='images/work.jpg') }}" alt="">
+        </div>
+      </li>
+      <li>
+        <input type="radio" name="accordion" id="fourth">
+        <label for="fourth">프로젝트 기대효과는 무엇인가요?</label>
+        <div class="content">
+          <p>저출산 고령화 문제 심각성을 알린다.</p>
+          <p>정책 수립 및 의사결정 지원에 도움을 줄 수 있다.</p>  
+          <p>지역 균형 발전 전략에 도움을 줄 수 있다.</p>  
+          <p>정확한 인구 변화 예측을 통해 기업 전략 계획 수립에 도움을 줄 수 있다.</p>  
+        </div>
+      </li>
+    </ul>
+  </section>  
+
+  <!-- 푸터 -->
+  <footer>
+    <div class="footer-content">
+      <div class="col left">
+        <h2>프로젝트 조 안내</h2>
+        <div class="footer-info">
+          <p>주소 : 서울 종로구 돈화문로 26 단성사 4층 KG아이티뱅크</p>
+          <p>조원 : 채수병</p>
+        </div>
+      </div>
+      <div class="col center">
+        <h2>KG아이티뱅크</h2>
+        <h3>02-3672-6900</h3>
+        <p>월-금 09:00-18:00</p>
+        <p><a href="https://www.kgitbank.co.kr/">KG아이티뱅크 사이트</a></p>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>Copyright &copy; 생성형 ai 서비스 개발 채수병 All rights reserved</p>
+    </div>
+  </footer>  
+</body>
+</html>

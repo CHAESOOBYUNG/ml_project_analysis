@@ -6,14 +6,17 @@ body {
 
 #map-container {
   position: relative;
-  width: 100%;
-  max-width: 600px;
+  width: 600px; /* 지도 크기를 적절한 크기로 조절 */
+  height: auto;
   margin: auto;
-} 
+  overflow: hidden; /* 넘치는 부분 숨기기 */
+}
 
 #korea-map {
-  width: 100%;
+  width: 600px; /* 지도 크기 고정 */
+  height: auto;
   display: block;
+  margin: auto;
 }
 
 .marker {

@@ -3,7 +3,7 @@
 // 통합된 JSON 데이터 로드 함수
 async function fetchRegionData() {
   try {
-    const response = await fetch('korea/regions.json');
+    const response = await fetch('/static/regions.json');  // 올바른 플라스크 경로 사용
     if (!response.ok) {
       throw new Error('데이터를 가져오는 데 실패했습니다.');
     }
@@ -48,18 +48,25 @@ function addMarkers(regions) {
 
   clearMarkers(); // 기존 마커 삭제
 
+  // 지도 크기 가져오기
+  const mapWidth = mapImage.clientWidth;
+  const mapHeight = mapImage.clientHeight;
+
   regions.forEach(region => {
     const marker = document.createElement('div');
     marker.className = 'marker';
 
-    // 지도 크기에 맞춰 상대적인 위치 설정
+    // 지도 크기에 맞춰 상대적인 위치 조정
+    const markerTop = (parseFloat(region.top) / 100) * mapHeight;
+    const markerLeft = (parseFloat(region.left) / 100) * mapWidth;
+
     marker.style.position = 'absolute';
-    marker.style.top = region.top;
-    marker.style.left = region.left;
-    marker.style.zIndex = '10';  // 마커가 지도 위에 표시되도록 z-index 추가
+    marker.style.top = `${markerTop}px`;
+    marker.style.left = `${markerLeft}px`;
+    marker.style.zIndex = '10';  // 마커가 지도 위에 표시되도록 z-index 설정
     marker.innerHTML = `${region.name}<br>${region.value}`;
     marker.setAttribute('data-info', region.info || '추가 정보 없음');
-    
+
     mapContainer.appendChild(marker);
 
     marker.addEventListener('click', () => handleMarkerClick(region));
@@ -192,3 +199,10 @@ document.getElementById('chart-type').addEventListener('change', (event) => {
 });
 
 
+function goToMain() {
+    window.location.href = "http://127.0.0.1:5000/";  // 메인 페이지로 이동
+}
+
+function Question() {
+    window.location.href = "http://127.0.0.1:5000/question/list/";
+}
